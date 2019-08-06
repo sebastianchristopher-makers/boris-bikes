@@ -1,42 +1,40 @@
 require 'dockingstation'
 
 describe DockingStation do
-  it 'responds to release_bike' do
+  it 'responds to #release_bike' do
     docking_station = DockingStation.new
     expect(docking_station).to respond_to(:release_bike)
   end
 
-  it 'gets a bike' do
+  it 'responds to #release_bike by returning a Bike' do
     docking_station = DockingStation.new
-    bicycle = docking_station.release_bike
-    expect(bicycle).to be_kind_of(Bike)
-  end
-
-  it 'release a working bike' do
-    docking_station = DockingStation.new
-    bicycle = docking_station.release_bike
-    expect(bicycle.working?).to be(true)
-  end
-
-  it 'responds to dock' do
-    docking_station = DockingStation.new
-    bicycle = docking_station.release_bike
-    expect(docking_station).to respond_to(:dock)
-  end
-
-  it 'should initialize with an empty array called bikes' do
-    docking_station = DockingStation.new
-    expect(docking_station.bikes).to eq( [] )
-  end
-
-  it 'should take an instance of Bike as an argument and store it' do
-    docking_station = DockingStation.new
-    bicycle = docking_station.release_bike
+    bicycle = Bike.new
     docking_station.dock(bicycle)
-    expect(docking_station.bikes).to include(bicycle)
+    expect(docking_station.release_bike).to be_kind_of(Bike)
   end
 
-  # it 'won\'t release bikes if there aren\'t any' do
-  #
-  # end
+  it 'responds to #release_bike by returning a working Bike' do
+    docking_station = DockingStation.new
+    bicycle = Bike.new
+    docking_station.dock(bicycle)
+    expect(docking_station.release_bike.working?).to be(true)
+  end
+
+  it 'responds to #dock with 1 argument' do
+    docking_station = DockingStation.new
+    bicycle = Bike.new
+    expect(docking_station).to respond_to(:dock).with(1).argument
+  end
+
+  it 'returns stored bikes' do
+    docking_station = DockingStation.new
+    bicycle = Bike.new
+    docking_station.dock(bicycle)
+    expect(docking_station.bikes).to eq(bicycle)
+  end
+
+  it 'won\'t release bikes if there aren\'t any' do
+    docking_station = DockingStation.new
+    expect { docking_station.release_bike }.to raise_error("No bikes for you!")
+  end
 end
