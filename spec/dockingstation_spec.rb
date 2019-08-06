@@ -35,6 +35,21 @@ describe DockingStation do
 
   it 'won\'t release bikes if there aren\'t any' do
     docking_station = DockingStation.new
+    docking_station.dock(Bike.new)
+    docking_station.release_bike
     expect { docking_station.release_bike }.to raise_error("No bikes for you!")
+  end
+
+  it 'releases the bike that has been stored' do
+    docking_station = DockingStation.new
+    bicycle = Bike.new
+    docking_station.dock(bicycle)
+    expect(docking_station.release_bike).to eq(bicycle)
+  end
+
+  it 'can\'t dock over capacity (of 20)' do
+    docking_station = DockingStation.new
+    20.times { docking_station.dock(Bike.new) }
+    expect { docking_station.dock(Bike.new) }.to raise_error("This dock is full!")
   end
 end
