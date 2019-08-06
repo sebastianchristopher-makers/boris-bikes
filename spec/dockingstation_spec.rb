@@ -56,8 +56,8 @@ describe DockingStation do
     end
     it 'cycles through broken bikes until the user can borrow a working one' do
       2.times { docking_station.dock(Bike.new, false) }
-      docking_station.dock(bicycle)
-      expect(docking_station.release_bike).to eq(bicycle)
+      docking_station.dock(Bike.new)
+      expect(docking_station.release_bike.working?).to be(true)
     end
   end
 
