@@ -14,15 +14,14 @@ class DockingStation
   def release_bike
     raise "No bikes for you!" if empty?
     # return @bikes.pop
-    bikes.each_with_index { |bike, index|
-      return @bikes.delete_at(index) if bike.working
+    @bikes.each_with_index { |bike, index|
+      return @bikes.delete_at(index) if bike.working?
     }
     raise "All bikes are broken!"
   end
 
-  def dock(bike_to_add, working = true)
+  def dock(bike_to_add)
     raise "This dock is full!" if full?
-    bike_to_add.working = working
     @bikes.push(bike_to_add)
   end
 
