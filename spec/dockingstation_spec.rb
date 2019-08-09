@@ -81,14 +81,12 @@ describe DockingStation do
       docking_station.dock(dbl_bike)
       expect { docking_station.release_bike }.to raise_error("All bikes are broken!")
     end
-    xit 'size is now 20' do # I assume that even though let variable is only initialized once,
-      # anthing modification to its attributes doesn't persist outside this block
-      expect(docking_station.bikes.size).to eq(20)
-    end
     it 'cycles through broken bikes until the user can borrow a working one' do
-      broken_bike = double(:broken_bike)
+      # broken_bike = double(:broken_bike)
+      # allow(broken_bike).to receive(:report_broken)
+      # allow(broken_bike).to receive(:working?).and_return(false)
+      broken_bike = double(:broken_bike, working?: false)
       allow(broken_bike).to receive(:report_broken)
-      allow(broken_bike).to receive(:working?).and_return(false)
       allow(dbl_bike).to receive(:working?).and_return(true)
       5.times {
         broken_bike.report_broken
