@@ -4,15 +4,18 @@ class Van
   attr_reader :capacity
   attr_accessor :location
 
-  def initialize
-    @capacity = DEFAULT_CAPACITY
+  def initialize(capacity = DEFAULT_CAPACITY)
+    @capacity = capacity
     @bikes = []
   end
   def drive_to(location)
     @location = location
   end
-  def collect_bike
+  def collect_bike(bike)
     @bikes << @location.release_bike
+  end
+  def deliver_bike
+    @location.dock(@bikes.pop)
   end
 end
 

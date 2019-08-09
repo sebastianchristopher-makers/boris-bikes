@@ -1,23 +1,28 @@
 require 'van'
 
 describe Van do
-  let(:docking_station_1) { double(:docking_station_1) }
-
   let(:bike) { double(:bike) }
+  let(:docking_station) { double(:docking_station, release_bike: bike) }
+
   it 'can move from one location to another' do
-    subject.drive_to(docking_station_1)
-    expect(subject.location).to eq(docking_station_1)
+    subject.drive_to(docking_station)
+    expect(subject.location).to eq(docking_station)
   end
   it 'has a default capacity' do
     expect(subject.capacity).to eq(Van::DEFAULT_CAPACITY)
   end
   it 'can collect bikes from docking stations' do
-    allow(docking_station_1).to receive(:release_bike).and_return(bike)
-    subject.drive_to(docking_station_1)
-    subject.collect_bike
+    subject.drive_to(docking_station)
+    subject.collect_bike(subject.location.release_bike)
     expect(subject.bikes).to include(bike)
   end
-
-  # it 'can deliver bikes to docking stations' do
-
+  it 'can deliver bikes to garages' do
+    garage = double(:garage)
+    allow(garage).to receive(:dock)
+    subject.drive_to(docking_station)
+    subject.collect_bike(subject.location.release_bike)
+    subject.drive_to(garage)
+    subject.deliver_bike
+    expect(subject.bikes).to_not include(bike)
+  end
 end

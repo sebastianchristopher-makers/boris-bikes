@@ -1,11 +1,13 @@
 require_relative './bike'
 
 class Garage
-  attr_accessor :bikes
-  def initialize
+  DEFAULT_CAPACITY = 40
+  attr_accessor :bikes, :capacity
+  def initialize(capacity = DEFAULT_CAPACITY)
+    @capacity = capacity
     @bikes = []
   end
-  def take_bike(bike)
+  def dock(bike)
     # raise "We only accept bikes from vans!" if !from.is_a?(Van)
     @bikes << bike
   end

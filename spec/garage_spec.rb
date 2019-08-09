@@ -5,16 +5,16 @@ describe Garage do
   let(:van) { double(:van) }
 
   it 'accepts bikes' do
-    subject.take_bike(bike)
+    subject.dock(bike)
     expect(subject.bikes).to include(bike)
   end
   it 'releases bikes' do
-    subject.take_bike(bike)
+    subject.dock(bike)
     subject.release_bike
     expect(subject.bikes).to_not include(bike)
   end
   it 'has a method called #fix_bike accepting one argument' do
-    subject.take_bike(bike)
+    subject.dock(bike)
     expect(subject).to respond_to(:fix_bike).with(1).argument
   end
   it 'fixes broken bikes' do
@@ -25,5 +25,8 @@ describe Garage do
     bike.report_broken
     subject.fix_bike(bike)
     expect(bike).to be_working
+  end
+  it 'has a default capacity' do
+    expect(subject.capacity).to eq(Garage::DEFAULT_CAPACITY)
   end
 end

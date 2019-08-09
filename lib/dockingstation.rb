@@ -23,7 +23,7 @@ class DockingStation
 
   def dock(bike_to_add)
     raise "This dock is full!" if full?
-    @bikes.push(bike_to_add)
+    @bikes << bike_to_add
   end
 
   private
