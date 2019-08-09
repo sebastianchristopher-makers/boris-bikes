@@ -13,7 +13,7 @@ class DockingStation
   end
 
   def release_bike
-    raise "No bikes for you!" if empty?
+    raise "#{self.class.name} is empty!" if empty?
     # return @bikes.pop
     @bikes.each_with_index { |bike, index|
       return @bikes.delete_at(index) if bike.working?
@@ -22,7 +22,7 @@ class DockingStation
   end
 
   def dock(bike_to_add)
-    raise "This dock is full!" if full?
+    raise "#{self.class.name} is full!" if full?
     @bikes << bike_to_add
   end
 

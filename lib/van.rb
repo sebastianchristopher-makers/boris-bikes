@@ -12,15 +12,19 @@ class Van
     @location = location
   end
   def collect_bike(bike)
+    raise "#{self.class.name} is full!" if full?
     @bikes << @location.release_bike
   end
   def deliver_bike
+    raise "#{self.class.name} is empty!" if empty?
     @location.dock(@bikes.pop)
   end
-end
 
-#drive_to_garage
-# @ location
-# def dock_bike
-#   @bikes << garage.release_bike if @location == garage
-#   @bikes << docking_station.release_bike if @location == dockingstation
+  private
+  def full?
+    @bikes.size == @capacity
+  end
+  def empty?
+    @bikes.size == 0
+  end
+end
